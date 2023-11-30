@@ -28,7 +28,7 @@ sudo apt-get update
 sudo apt-get install nodejs npm git software-properties-common
 ```
 
-### STEP 2: Install More Dependencies
+### STEP 2: Install mjpg-streamer
 
 a. Run  
 ```sh
@@ -40,3 +40,75 @@ sudo make install
 
 ```
 in the rpi shell.
+
+
+### STEP 3: Running On Startup
+
+write into /etc/init.d/livestream.sh
+
+`sudo vi /etc/init.d/livestream.sh`
+
+the following:
+
+```sh
+#!/bin/sh
+# /etc/init.d/livestream.sh
+### BEGIN INIT INFO
+# Provides:          livestream.sh
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: mjpg_streamer for webcam
+# Description:       Streams /dev/video0 to http://IP/?action=stream
+### END INIT INFO
+f_message(){
+        echo "[+] $1"
+}
+ 
+# Carry out specific functions when asked to by the system
+case "$1" in
+        start)
+                f_message "Starting mjpg_streamer"
+                /usr/local/bin/mjpg_streamer -b -i "input_uvc.so -f 30 -r 480x320" -o "output_http.so -w /usr/local/share/mjpg-streamer/www"
+                sleep 2
+                f_message "mjpg_streamer started"
+                ;;
+        stop)
+                f_message "Stopping mjpg_streamer…"
+                killall mjpg_streamer
+                f_message "mjpg_streamer stopped"
+                ;;
+        restart)
+                f_message "Restarting daemon: mjpg_streamer"
+                killall mjpg_streamer
+                /usr/local/bin/mjpg_streamer -b -i "input_uvc.so -f 15 -r 1920x1080" -o "output_http.so -w /usr/local/share/mjpg-streamer/www"
+                sleep 2
+                f_message "Restarted daemon: mjpg_streamer"
+                ;;
+        status)
+                pid=`ps -A | grep mjpg_streamer | grep -v "grep" | grep -v mjpg_streamer. | awk ‘{print $1}’ | head -n 1`
+                if [ -n "$pid" ];
+                then
+                        f_message "mjpg_streamer is running with pid ${pid}"
+                        f_message "mjpg_streamer was started with the following command line"
+                        cat /proc/${pid}/cmdline ; echo ""
+                else
+                        f_message "Could not find mjpg_streamer running"
+                fi
+                ;;
+        *)
+                f_message "Usage: $0 {start|stop|status|restart}"
+                exit 1
+                ;;
+esac
+exit 0
+```
+
+
+Enable using:
+
+```sh
+sudo chmod 755 /etc/init.d/livestream.sh
+sudo update-rc.d livestream.sh defaults
+```
