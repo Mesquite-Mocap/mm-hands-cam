@@ -26,6 +26,7 @@ c. Then install node.js and other dependencies for your system:
 ```
 sudo apt-get update
 sudo apt-get install nodejs npm git software-properties-common
+sudo apt-get install build-essential libjpeg9-dev imagemagick libv4l-dev cmake git -y
 ```
 
 ### STEP 2: Install mjpg-streamer
