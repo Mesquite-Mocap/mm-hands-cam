@@ -44,7 +44,7 @@ in the rpi shell.
 
 ### STEP 3: Running On Startup
 
-write into /etc/init.d/livestream.sh
+write into `/etc/init.d/livestream.sh`
 
 `sudo vi /etc/init.d/livestream.sh`
 
