@@ -32,15 +32,11 @@ sudo apt-get install nodejs npm git software-properties-common
 
 a. Run  
 ```sh
-sudo apt-get install --reinstall ca-certificates
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt-get update
-sudo apt-get install python2.7
-sudo ln -s /usr/bin/python2.7 /usr/bin/python
-
-sudo npm install n
-sudo n install 6
-hash -r
+git clone https://github.com/jacksonliam/mjpg-streamer.git
+cd mjpg-streamer/mjpg-streamer-experimental
+ 
+make
+sudo make install
 
 ```
 in the rpi shell.
