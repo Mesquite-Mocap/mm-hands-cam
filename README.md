@@ -93,7 +93,7 @@ f_message(){
 case "$1" in
         start)
                 f_message "Starting mjpg_streamer"
-                /usr/local/bin/mjpg_streamer -b -i "input_uvc.so -f 15 -r 1920x1080" -o "output_http.so -w /usr/local/share/mjpg-streamer/www"
+                /usr/local/bin/mjpg_streamer -b -i "input_uvc.so -f 30 -r 480x320" -o "output_http.so -w /usr/local/share/mjpg-streamer/www"
                 sleep 2
                 f_message "mjpg_streamer started"
                 ;;
