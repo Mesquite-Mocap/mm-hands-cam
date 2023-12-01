@@ -43,6 +43,28 @@ sudo make install
 in the rpi shell.
 
 
+b. Make sure serial interface and auto-logon for root user are enabled (use sudo rapsi-config; restart to apply settings)
+
+c. Add
+
+```
+dtoverlay=dwc2
+```
+
+to `/boot/config.txt`.
+
+d. Add
+
+```
+dwc2
+g_serial
+```
+
+to `/etc/modules`.
+
+d. change hostname to either `mmright` or `mmleft` (depending on which hand you are using) using `sudo raspi-config` and restart.
+
+
 ### STEP 3: Running On Startup
 
 write into `/etc/init.d/livestream.sh`
@@ -112,4 +134,17 @@ Enable using:
 ```sh
 sudo chmod 755 /etc/init.d/livestream.sh
 sudo update-rc.d livestream.sh defaults
+```
+
+
+You can now start the stream using:
+
+```sh
+sudo service livestream start
+```
+
+and check status using:
+
+```sh
+sudo service livestream status
 ```
