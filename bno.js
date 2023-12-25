@@ -1,23 +1,30 @@
-// read bno085 on i2c bus in raspberry pi
+import board
+import busio
+from adafruit_bno08x.i2c import BNO08X_I2C
+from adafruit_bno08x import BNO_REPORT_ACCELEROMETER
+from adafruit_bno08x import BNO_REPORT_GYROSCOPE
+from adafruit_bno08x import BNO_REPORT_MAGNETOMETER
+from adafruit_bno08x import BNO_REPORT_ROTATION_VECTOR
 
-var i2c = require('i2c-bus');
-var bno085 = require('./bno085.js');
+import json
+import websocket
 
-var i2c1 = i2c.openSync(1);
+ws = websocket.WebSocket()
+ws.connect("ws://mmdongle.local/hub")
 
-var bno = bno085(i2c1, 0x4a);
-bno.init();
-bno.start();
 
-setInterval(function() {
-    var data = bno.getQuaternion();
-    console.log(data);
-}
-, 100);
 
-process.on('SIGINT', function() {
-    console.log("Caught interrupt signal");
-    bno.stop();
-    process.exit();
-}   );
 
+i2c = busio.I2C(board.SCL, board.SDA)
+bno = BNO08X_I2C(i2c)
+bno.enable_feature(BNO_REPORT_ACCELEROMETER)
+bno.enable_feature(BNO_REPORT_GYROSCOPE)
+bno.enable_feature(BNO_REPORT_MAGNETOMETER)
+bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
+
+while True:
+    quat_i, quat_j, quat_k, quat_real = bno.quaternion  # pylint:disable=no-member
+    print("%0.2f  %0.2f %0.2f %0.2f" % (quat_i, quat_j, quat_k, quat_real))
+
+    # send over websocket
+    ws.send(json.dumps({"w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real}))
