@@ -10,7 +10,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--hand", help="host to connect to")
 args = parser.parse_args()
-hand = args.hand or "RightArm"
+hand = args.hand or "RightForeArm"
 
 i2c = busio.I2C(board.SCL, board.SDA)
 bno = BNO08X_I2C(i2c)
