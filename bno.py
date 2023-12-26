@@ -46,6 +46,6 @@ async def send_data():
 while True:
     quat_i, quat_j, quat_k, quat_real = bno.quaternion  # pylint:disable=no-member
     print("%0.2f  %0.2f %0.2f %0.2f" % (quat_i, quat_j, quat_k, quat_real))
-
+    send_data()
 
 asyncio.run(send_data())
