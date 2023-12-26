@@ -35,7 +35,7 @@ bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
 
 # Connect to the ws server
 
-websockets_server = "ws://mmdongle.local:80/hub"
+websockets_server = "ws://192.168.1.50:80/hub"
 async def send_data():
     async with websockets.connect(websockets_server) as websocket:
         # send data
