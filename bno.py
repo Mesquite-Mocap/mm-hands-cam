@@ -57,4 +57,3 @@ while True:
     print("%0.2f  %0.2f %0.2f %0.2f" % (quat_i, quat_j, quat_k, quat_real))
     send_data()
 
-asyncio.run(send_data())
