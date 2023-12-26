@@ -7,7 +7,7 @@ from adafruit_bno08x import BNO_REPORT_MAGNETOMETER
 from adafruit_bno08x import BNO_REPORT_ROTATION_VECTOR
 
 import json
-import websocket
+import websockets
 
 # get args
 import argparse
@@ -18,7 +18,7 @@ args = parser.parse_args()
 hand = args.hand or "RightArm"
 
 
-websocket.connect("ws://mmdongle.local:80/hub")
+websockets.connect("ws://mmdongle.local:80/hub")
 
 
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -33,4 +33,4 @@ while True:
     print("%0.2f  %0.2f %0.2f %0.2f" % (quat_i, quat_j, quat_k, quat_real))
 
     # send over websocket
-    websocket.send(json.dumps({"bone": hand, "w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real}))
+    websockets.send(json.dumps({"bone": hand, "w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real}))
