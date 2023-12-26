@@ -33,15 +33,24 @@ bno.enable_feature(BNO_REPORT_GYROSCOPE)
 bno.enable_feature(BNO_REPORT_MAGNETOMETER)
 bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
 
+# Connect to the ws server
+
+websockets_server = "ws://mmdongle.local/hub"
 async def send_data():
-    uri = "ws://mmdongle.local/hub"  
-    async with websockets.connect(uri) as websocket:
-        message = json.dumps({"bone": hand, "w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real})
-        print(message)
-        await websocket.send(message) 
-
-
-
+    async with websockets.connect(websockets_server) as websocket:
+        # send data
+        data = {
+        "bone": hand,
+        "w": quat_i,
+        "x": quat_j,
+        "y": quat_k,
+        "z": quat_real
+        }
+        await websocket.send(json.dumps(data))
+    
+        # receive response
+        response = await websocket.recv()
+        print(response)
 
 while True:
     quat_i, quat_j, quat_k, quat_real = bno.quaternion  # pylint:disable=no-member
