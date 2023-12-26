@@ -148,3 +148,15 @@ and check status using:
 ```sh
 sudo service livestream status
 ```
+
+
+
+### STEP 4: Send orientation data
+
+```sh
+git clone https://github.com/Mesquite-Mocap/mm-hands-cam
+cd mm-hands-cam
+rm -rf log 
+forever start -c python3 -l $PWD/log bno.py 
+
+```
