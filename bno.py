@@ -36,8 +36,8 @@ bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
 async def send_data():
     uri = "ws://mmdongle.local/hub"  
     async with websockets.connect(uri) as websocket:
-        print("%0.2f  %0.2f %0.2f %0.2f" % (quat_i, quat_j, quat_k, quat_real))
         message = json.dumps({"bone": hand, "w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real})
+        print(message)
         await websocket.send(message) 
 
 
@@ -45,6 +45,7 @@ async def send_data():
 
 while True:
     quat_i, quat_j, quat_k, quat_real = bno.quaternion  # pylint:disable=no-member
+    print("%0.2f  %0.2f %0.2f %0.2f" % (quat_i, quat_j, quat_k, quat_real))
 
 
 asyncio.run(send_data())
