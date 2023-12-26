@@ -1,5 +1,4 @@
-var taillog = require('tail-log');
-var log = taillog('log');
-log.on('line', function(line) {
-    console.log(line);
+const Tail = require('tail-file');
+const mytail = new Tail("log", line => {
+  console.log( line );
 });
