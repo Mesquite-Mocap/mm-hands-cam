@@ -21,4 +21,5 @@ bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
 while True:
     quat_i, quat_j, quat_k, quat_real = bno.quaternion  # pylint:disable=no-member
     print(json.dumps({"bone": hand, "w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real})) 
-    time.sleep(0.1)
+    # sleep for a 10 ms
+    time.sleep(0.01)
