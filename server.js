@@ -19,5 +19,5 @@ client.on('close', () => {
 const Tail = require('tail-file');
 const mytail = new Tail("log", line => {
   console.log( line );
-  ws.send( line );
+  client.send( line );
 });
