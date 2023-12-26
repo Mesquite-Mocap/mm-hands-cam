@@ -1,6 +1,6 @@
 const ws = require('ws');
 // client
-const client = new ws('ws://mmdongle.local:80/hub');
+const client = new ws('ws://192.168.1.50:80/hub');
 client.on('open', () => {
   console.log('connected');
   client.send('Hello!');
