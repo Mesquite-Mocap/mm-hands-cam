@@ -9,11 +9,17 @@ from adafruit_bno08x import BNO_REPORT_ROTATION_VECTOR
 import json
 import websocket
 
+# get args
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--hand", help="host to connect to")
+args = parser.parse_args()
+
+hand = args.hand or "RightArm"
+
+
 ws = websocket.WebSocket()
 ws.connect("ws://mmdongle.local/hub")
-
-
-
 
 i2c = busio.I2C(board.SCL, board.SDA)
 bno = BNO08X_I2C(i2c)
@@ -27,4 +33,4 @@ while True:
     print("%0.2f  %0.2f %0.2f %0.2f" % (quat_i, quat_j, quat_k, quat_real))
 
     # send over websocket
-    ws.send(json.dumps({"w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real}))
+    ws.send(json.dumps({"bone": hand, "w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real}))
