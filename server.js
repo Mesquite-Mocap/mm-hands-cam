@@ -1,9 +1,9 @@
 const WebSocket = require('ws');
 
-var ws = new WebSocket('ws://mmdongle.local:80/hub');
+var ws = null;
 
 function connectws() {
-    ws = new WebSocket('ws://mmdongle.local:80/hub');
+    ws = new WebSocket('ws://192.168.1.50:80/hub');
     ws.on('open', function open() {
         console.log("connected");
         //write("hello");
