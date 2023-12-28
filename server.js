@@ -1,4 +1,3 @@
-var hand = "rhand";
 const WebSocket = require('ws');
 
 var ws = new WebSocket('ws://mmdongle.local:80/hub');
@@ -51,7 +50,7 @@ loadFace = () => {
 
   consumerR.on("data", (data) => {
     base64data = "data:image/png;base64," + new Buffer(data).toString('base64');
-    write(JSON.stringify({ hand.toString(): base64data }));
+    write(JSON.stringify({ rhand: base64data }));
   });
   consumerR.on("end", () => { 
     console.log("end");
