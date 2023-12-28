@@ -3,7 +3,7 @@ const WebSocket = require('ws');
 
 var ws = new WebSocket('ws://mmdongle.local:80/hub');
 
-connect = () => {
+function connect() {
     ws = new WebSocket('ws://mmdongle.local:80/hub');
     ws.on('open', function open() {
         console.log("connected");
@@ -20,6 +20,7 @@ connect = () => {
     });
 }
 
+connect();
 
 function write(str) {
     ws.send(str);
