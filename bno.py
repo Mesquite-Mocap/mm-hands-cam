@@ -13,7 +13,7 @@ ws = websocket.WebSocket()
 
 ws.connect("ws://192.168.1.50:80/hub")
 
-// ws.send("Hello, Server")
+# ws.send("Hello, Server")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--hand", help="host to connect to")
