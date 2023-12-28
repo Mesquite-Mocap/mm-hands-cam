@@ -1,7 +1,7 @@
 var hand = "rhand";
 const WebSocket = require('ws');
 
-var ws = new WebSocket('ws://mmdongle.local/hub');
+var ws = new WebSocket('ws://mmdongle.local:80/hub');
 function write(str) {
     ws.send(str);
 }
