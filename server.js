@@ -2,12 +2,32 @@ var hand = "rhand";
 const WebSocket = require('ws');
 
 var ws = new WebSocket('ws://mmdongle.local:80/hub');
+
+connect = () => {
+    ws = new WebSocket('ws://mmdongle.local:80/hub');
+    ws.on('open', function open() {
+        console.log("connected");
+        write("hello");
+    });
+
+    ws.on('message', function incoming(data) {
+        console.log(data);
+    });
+
+    ws.on('close', function close() {
+        console.log('disconnected');
+        connect();
+    });
+}
+
+
 function write(str) {
     ws.send(str);
 }
 
 var request = require("request");
 var MjpegConsumer = require("mjpeg-consumer");
+const { connect } = require('net');
 
 
 var faceStart = false;
