@@ -7,6 +7,14 @@ import json
 import time
 import argparse
 
+import websocket
+
+ws = websocket.WebSocket()
+
+ws.connect("ws://mmdongle.local:80/hub")
+
+ws.send("Hello, Server")
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--hand", help="host to connect to")
 args = parser.parse_args()
