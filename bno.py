@@ -13,7 +13,7 @@ ws = websocket.WebSocket()
 
 ws.connect("ws://192.168.1.50:80/hub")
 
-ws.send("Hello, Server")
+// ws.send("Hello, Server")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--hand", help="host to connect to")
@@ -28,6 +28,6 @@ bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
 
 while True:
     quat_i, quat_j, quat_k, quat_real = bno.quaternion  # pylint:disable=no-member
-    print(json.dumps({"bone": hand, "w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real})) 
+    ws.send(json.dumps({"bone": hand, "w": quat_i, "x": quat_j, "y": quat_k, "z": quat_real})) 
     # sleep for a 10 ms
-    time.sleep(0.03)
+    # time.sleep(0.03)
