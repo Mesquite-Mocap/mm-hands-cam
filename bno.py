@@ -32,7 +32,7 @@ hand = args.hand or "RightForeArm"
 i2c = busio.I2C(board.SCL, board.SDA)
 bno = BNO08X_I2C(i2c)
 bno.enable_feature(BNO_REPORT_ROTATION_VECTOR)
-sched.add_job(sendMessage, 'interval', seconds=1000/30)
+sched.add_job(sendMessage, 'interval', seconds=1/30)
 sched.start()
 
 quat_i = 0
