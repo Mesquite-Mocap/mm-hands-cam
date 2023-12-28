@@ -1,7 +1,7 @@
 var hand = "rhand";
 const WebSocket = require('ws');
 
-var ws = new WebSocket('ws://192.168.1.50:80/hub');
+var ws = new WebSocket('ws://192.168.1.50/hub');
 function write(str) {
     ws.send(str);
 }
