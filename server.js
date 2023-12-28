@@ -7,7 +7,7 @@ function connectws() {
     ws = new WebSocket('ws://mmdongle.local:80/hub');
     ws.on('open', function open() {
         console.log("connected");
-        write("hello");
+        //write("hello");
     });
 
     ws.on('message', function incoming(data) {
