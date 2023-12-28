@@ -25,7 +25,7 @@ setInterval(() => {
 var consumerR = null;
 loadFace = () => {
   consumerR = new MjpegConsumer();
-  request("http://192.168.1.50:8080/?action=stream")
+  request("http://127.0.0.1:8080/?action=stream")
     .pipe(consumerR);
 
   consumerR.on("data", (data) => {
