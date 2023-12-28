@@ -1,25 +1,43 @@
-const ws = require('ws');
-// client
-const client = new ws('ws://192.168.1.50:80/hub');
-client.on('open', () => {
-  console.log('connected');
-  client.send('Hello!');
-});
-client.on('message', data => {
-    console.log(data);
-    }
-);
-client.on('close', () => {
-    console.log('disconnected');
-    process.exit(0);
-    }
-);
+var hand = "rhand";
+const WebSocket = require('ws');
+
+var ws = new WebSocket('ws://192.168.1.50:80/hub');
+function write(str) {
+    ws.send(str);
+}
+
+var request = require("request");
+var MjpegConsumer = require("mjpeg-consumer");
 
 
-const Tail = require('tail-file');
-const mytail = new Tail("log", line => {
-  //console.log( line );
-  if (client.readyState == 1){
-  client.send( line );
+var faceStart = false;
+
+setInterval(() => {
+  if (consumerR == null) {
+    try {
+      loadFace();
+    } catch (e) {
+      console.log(e);
+    }
   }
-});
+}, 10 * 1000);
+
+var consumerR = null;
+loadFace = () => {
+  consumerR = new MjpegConsumer();
+  request("http://192.168.1.50:8080/?action=stream")
+    .pipe(consumerR);
+
+  consumerR.on("data", (data) => {
+    base64data = "data:image/png;base64," + new Buffer(data).toString('base64');
+    write(JSON.stringify({ hand: base64data }));
+  });
+  consumerR.on("end", () => { 
+    console.log("end");
+    consumerR = null;
+  });
+  consumerR.on("error", (e) => {
+    console.log(e);
+    consumerR = null;
+  });
+}
