@@ -151,11 +151,23 @@ sudo service livestream status
 
 
 
-### STEP 4: Send orientation data
+### STEP 4: Send orientation data and hand image
 
 ```sh
 git clone https://github.com/Mesquite-Mocap/mm-hands-cam
 cd mm-hands-cam
-rm -rf log 
-forever start -c python3 -l $PWD/log bno.py 
+forever start -c python3 bno.py 
+node rhand.js # or lhand.js
+
+```
+
+### STEP 5: Autostart
+
+Put this in your `~/.bashrc`:
+
+```sh
+cd /home/mesquite/mm-hands-cam
+python3 bno.py 
+node rhand.js # or lhand.js
+
 ```
