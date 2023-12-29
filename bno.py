@@ -42,7 +42,7 @@ quat_real = 0
 while True:
     quat_i, quat_j, quat_k, quat_real = bno.quaternion  # pylint:disable=no-member
     sendMessage()
-    time.sleep(0.03)
+    time.sleep(0.025)
 
 
 
