@@ -29,6 +29,7 @@ var request = require("request");
 var MjpegConsumer = require("mjpeg-consumer");
 const { connect } = require('net');
 
+var hand = process.argv[2] || "left";
 
 var faceStart = false;
 
@@ -50,7 +51,7 @@ loadFace = () => {
 
   consumerR.on("data", (data) => {
     base64data = "data:image/png;base64," + new Buffer(data).toString('base64');
-    write(JSON.stringify({ rhand: base64data }));
+    write(JSON.stringify({ hand: hand, image: base64data }));
   });
   consumerR.on("end", () => { 
     console.log("end");
