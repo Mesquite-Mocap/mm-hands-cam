@@ -167,7 +167,7 @@ Put this in your `~/.bashrc`:
 
 ```sh
 cd /home/mesquite/mm-hands-cam
-node rhand.js # or lhand.js
+node server.js right # or left, which is default
 python3 bno.py 
 
 ```

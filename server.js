@@ -29,6 +29,10 @@ var request = require("request");
 var MjpegConsumer = require("mjpeg-consumer");
 const { connect } = require('net');
 
+if(process.argv.length < 3) {
+  console.log("Usage: node server.js <hand>");
+  process.exit();
+}
 var hand = process.argv[2] || "left";
 
 var faceStart = false;
